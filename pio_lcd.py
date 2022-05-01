@@ -2,10 +2,12 @@
     use PIO to send data and commands to display
     in 4 bit data mode.
     
-    write only, user defined chars not supported
+    write only, up to 8 user defined chars are supported
     
     STATUS:
-    initial testing works
+   Tested
+   
+   by SouperMan2  2022
 '''
  
 import time
