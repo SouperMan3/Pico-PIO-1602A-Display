@@ -68,7 +68,7 @@ class Disp1602():
     LCD_SHIFTDEC = 0x00
     
     def __init__(self, smnum, ob, sb, cmd_pin, rows=2, cols=16):
-        ''' constructor for 1 x 16 lines '''
+        ''' constructor for 2. 16 character lines '''
         global PIO_FREQ
         out = Pin(ob, Pin.OUT)
         side = Pin(sb, Pin.OUT)
@@ -81,7 +81,7 @@ class Disp1602():
       
     def begin(self):  # perform the 1602 setup
         self.cmd.value(0)  # start in cmd mode
-        time.sleep_ms(400)  # startup delay
+        time.sleep_ms(400)  # power on delay
         
         # setup display to 4 bit mode
         self.sendnyble(0x03)
@@ -114,8 +114,7 @@ class Disp1602():
             self.sendbyte(ord(d))
     
     def sendbyte(self, byte):
-        ''' must set cmd or data before calling '''
-
+        ''' code must set cmd pin before calling this'''
         self.sendnyble(byte >> 4)
         self.sendnyble(byte & 0x0F)
         time.sleep_us(200)
@@ -205,10 +204,10 @@ class Disp1602():
         time.sleep_ms(1)
         
     def createChar(self, charnum, chararray):
+        ''' chararray is 8 bytes long with char image '''
         charnum &= 0x07   # only 8 custom chars
-        addr = charnum << 3
-#         time.sleep(1)
-        print(hex(charnum), hex(addr), hex(self.LCD_SETCGRAMADDR | addr))
+        addr = charnum << 3  # char ram start address
+#        print(hex(charnum), hex(addr), hex(self.LCD_SETCGRAMADDR | addr))
         self.sendcmd(self.LCD_SETCGRAMADDR | addr)
         time.sleep_us(100)
         self.cmd.value(1)  # data mode
