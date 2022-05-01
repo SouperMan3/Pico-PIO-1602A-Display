@@ -14,3 +14,5 @@ read methods.  As a result, the library provides generous timings for the displa
 device to process the instructions.  I intend to implement read capabilities in future
 versions to allow the busy flag to reduce reliance on these timing instructions.
 
+To use this library add the file pio_lcd.py to your /lib folder.
+
